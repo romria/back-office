@@ -12,6 +12,7 @@ const reducer = <T,>(s: AsyncState<T>, a: AsyncAction<T>): AsyncState<T> => {
     case 'loading':  return {...s, isLoading: true, error: false};
     case 'resolved': return {data: a.data, isLoading: false, error: false};
     case 'rejected': return {...s, isLoading: false, error: true};
+    default: return s;
   }
 };
 

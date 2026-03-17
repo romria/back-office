@@ -146,8 +146,7 @@ DataT extends {id: string}
           skip: (action.payload.pageSelected - 1) * state.limit,
         };
       case ActionType.SELECT_NEXT_PAGE: {
-        if (state.pageSelected > state.pagesTotal) return state;
-        const pageSelected = state.pageSelected + 1;
+        const pageSelected = Math.min(state.pageSelected + 1, state.pagesTotal);
 
         return {
           ...state,
@@ -156,8 +155,7 @@ DataT extends {id: string}
         };
       }
       case ActionType.SELECT_PREVIOUS_PAGE: {
-        if (state.pageSelected === 1) return state;
-        const pageSelected = state.pageSelected - 1;
+        const pageSelected = Math.max(state.pageSelected - 1, 1);
 
         return {
           ...state,

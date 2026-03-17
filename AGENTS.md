@@ -18,12 +18,16 @@ src/
 ├── api/              # Domain API functions (call requestWithNotify)
 ├── assets/           # Fonts, SVGs, images
 ├── components/       # Shared UI components
+│   ├── action-icon/
 │   ├── button/
 │   ├── error-boundary/
 │   ├── input/
 │   ├── link/         # NavLink wrapper with same-location click prevention
 │   ├── loader/       # Loader spinner + SuspenseLoader wrapper
 │   ├── notifications/ # Toast notification list (auto-dismiss + manual)
+│   ├── pagination/
+│   ├── records-list/
+│   ├── switch/
 │   └── virtual-table/ # Virtualized sortable/paginated table
 ├── config/           # API base URL, request defaults, feature flags
 ├── constants/        # HTTP header names and content-type strings
@@ -31,7 +35,6 @@ src/
 │   └── request/      # Low-level fetch wrapper (timeout, error typing)
 ├── hooks/
 │   ├── use-async-data.ts    # Generic async state with staleness guard
-│   ├── use-table-data.ts    # Fetcher hook for paginated/sorted tables
 │   └── use-auto-scroll-on-navigation.ts
 ├── layouts/
 │   └── main/         # App shell (header, nav, Outlet)
