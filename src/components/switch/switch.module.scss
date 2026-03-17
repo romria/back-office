@@ -1,0 +1,71 @@
+@use '../../styles/variables' as *;
+
+$toggle-width: 36px;
+$toggle-height: 18px;
+$toggle-gutter: 3px;
+$toggle-radius: calc($toggle-height / 2);
+$toggle-control-size: calc($toggle-height - ($toggle-gutter * 2));
+
+.root {
+  display: inline-flex;
+  align-items: center;
+
+  //justify-content: center;
+  cursor: pointer;
+
+  &.inline {
+    display: inline-block;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+
+  &.isLoading {
+    cursor: progress;
+  }
+}
+
+.switch {
+  display: block;
+  position: relative;
+  padding-left: $toggle-width;
+  margin-bottom: $toggle-height;
+}
+
+.control {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: $toggle-height;
+  width: $toggle-width;
+  border-radius: $toggle-radius;
+  background-color: $color-gray;
+  transition: background-color .15s ease-in;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: $toggle-gutter;
+    top: $toggle-gutter;
+    width: $toggle-control-size;
+    height: $toggle-control-size;
+    border-radius: $toggle-radius;
+    background: #fff;
+    transition: left .15s ease-in;
+  }
+
+  &.checked {
+    background-color: $color-primary;
+
+    &::after {
+      left: calc($toggle-width - $toggle-control-size - $toggle-gutter);
+    }
+  }
+}
+
+.label {
+  margin-left: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+}

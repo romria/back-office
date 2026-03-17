@@ -1,0 +1,59 @@
+@use '../../../styles/variables' as *;
+
+.navigation {
+  display: flex;
+  flex: 0 0 230px;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 24px;
+}
+
+.naviHead {
+  color: $color-font-secondary;
+  padding: 8px 16px;
+  letter-spacing: 1px;
+}
+
+.naviLink {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: $transition;
+
+  &:hover,
+  &.active {
+    background-color: #F7F6FF;
+    font-weight: 600;
+  }
+}
+
+.linkIcon {
+  margin-right: 16px;
+
+  &.active {
+    color: $color-primary;
+  }
+}
+
+.linkLabel {
+  font-size: 15px;
+}
+
+.userInfo {
+  margin-top: auto;
+  padding: 8px 16px;
+  border-top: 1px solid $color-border;
+}
+
+.userName {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.userRole {
+  font-size: 12px;
+  color: $color-font-secondary;
+  text-transform: capitalize;
+}

@@ -1,0 +1,21 @@
+@use '../../styles/variables' as *;
+
+.root {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  display: unset;
+  transition: $transition;
+
+  &.edit {
+    color: $color-primary;
+  }
+
+  &.delete {
+    color: $red;
+  }
+
+  &:hover {
+    opacity: .4;
+  }
+}

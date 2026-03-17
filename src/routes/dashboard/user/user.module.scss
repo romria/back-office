@@ -1,0 +1,109 @@
+@use '../../../styles/variables' as *;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 860px;
+}
+
+.loading {
+  font-size: 14px;
+  color: $color-font-secondary;
+}
+
+.error {
+  font-size: 14px;
+  color: #c0392b;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+  background-color: #fff;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.name {
+  font-size: 22px;
+  font-weight: 700;
+  color: $color-font-primary;
+  margin-bottom: 8px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.username {
+  font-size: 14px;
+  color: $color-font-secondary;
+}
+
+.badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background-color: #eeecff;
+  color: $color-primary;
+  text-transform: capitalize;
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.section {
+  padding: 20px 24px;
+  background-color: #fff;
+  border: 1px solid $color-border;
+  border-radius: 12px;
+}
+
+.sectionTitle {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: $color-font-secondary;
+  margin-bottom: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: 12px;
+  color: $color-font-light;
+}
+
+.value {
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-font-primary;
+}

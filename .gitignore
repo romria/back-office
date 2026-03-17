@@ -1,0 +1,35 @@
+# dependencies
+/node_modules
+
+# testing
+/coverage
+*.lcov
+
+# production
+/build
+
+# TypeScript incremental build info
+*.tsbuildinfo
+
+# env files
+.env*
+!.env.example
+
+# logs
+logs
+*.log
+npm-debug.log*
+
+# optional npm cache
+.npm
+
+# editors
+.idea
+*.iml
+*.sublime*
+.vscode/
+.claude/
+
+# OS metadata
+.DS_Store
+Thumbs.db

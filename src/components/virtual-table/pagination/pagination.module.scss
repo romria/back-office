@@ -1,0 +1,79 @@
+@use '../../../styles/variables' as *;
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-top: 1px solid $color-border;
+  background-color: #f9fafb;
+  flex-shrink: 0;
+}
+
+.pageInfo {
+  font-size: 13px;
+  color: $color-font-secondary;
+}
+
+.pageControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pageSizeLabel {
+  font-size: 13px;
+  color: $color-font-secondary;
+}
+
+.pageSizeSelect {
+  font-size: 13px;
+  padding: 3px 6px;
+  border: 1px solid $color-border-form;
+  border-radius: 6px;
+  background-color: #fff;
+  color: $color-font-primary;
+  cursor: pointer;
+  outline: none;
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 2px rgb(74 70 255 / 15%);
+  }
+}
+
+.pageBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid $color-border-form;
+  border-radius: 6px;
+  background-color: #fff;
+  color: $color-font-primary;
+  font-size: 14px;
+  cursor: pointer;
+  transition: $transition;
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: #f0f1f3;
+    border-color: $color-primary;
+  }
+}
+
+.pageCurrent {
+  font-size: 13px;
+  color: $color-font-primary;
+  min-width: 48px;
+  text-align: center;
+}
+
+.pageIcon {
+  stroke-width: 2px;
+}
