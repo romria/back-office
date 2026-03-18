@@ -9,7 +9,7 @@ type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTION
 
 export interface RequestParams {
   url: string
-  headers?: HeadersInit
+  headers?: Record<string, string>
   method?: HttpMethod
   params?: Record<string, unknown> | unknown[] | FormData | File
   onError?: (error: RequestError) => void
@@ -18,7 +18,7 @@ export interface RequestParams {
 export async function request<T>(r: RequestParams): Promise<RequestResult<T>> {
   const {
     url,
-    headers = {},
+    headers,
     method = 'GET',
     params,
     onError,

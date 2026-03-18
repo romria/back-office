@@ -1,6 +1,6 @@
 import {type ReactElement, type ReactNode, useCallback, useMemo} from 'react';
 import {clsx as cs} from 'clsx';
-import {genericMemo} from '@/utils/typescript-patterns';
+import {genericMemo} from '@/utils/typescript';
 
 import classes from './switch.module.scss';
 
@@ -47,6 +47,9 @@ const Switch = <NameT extends string>({
         className,
       )}
       onClick={onClick}
+      role="switch"
+      tabIndex={0}
+      aria-checked={toggled}
     >
       <div className={classes.switch}>
         <div className={cs(classes.control, {[classes.checked]: toggled})} />

@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useState} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
-import type {RecordRaw, EmptyObject} from '../../../types';
-import type {Query, RequestData} from '../../../types/request';
+import type {RecordRaw, EmptyObject} from '@/types';
+import type {Query, RequestData} from '@/types/request';
 import type {RequestResult} from '@/controllers/request';
 import type {TableParams} from '@/components/virtual-table';
 // import {type DateRange} from '@/utils/date';

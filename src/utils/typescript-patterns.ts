@@ -3,7 +3,6 @@
  * These are not used in production code — copy and adapt as needed.
  */
 
-import { type ComponentProps, type ComponentType, memo } from 'react';
 import type { KeyOf } from './typescript';
 
 /**
@@ -25,6 +24,7 @@ export type Exactify<T, X extends T> = T & { [K in keyof X]: K extends keyof T ?
  *   type Strict = Subset<{ a: number }, Base>;  // ok if Base has { a: number }
  *   type Fail = Subset<{ z: string }, Base>;     // error if Base lacks 'z'
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type Subset<_T extends U, U> = U;
 
 /**
@@ -62,21 +62,6 @@ export function create<T>(ctor: new () => T): T {
 export function isInstanceOf<T>(ctor: new (...args: unknown[]) => T, obj: unknown): obj is T {
   return obj instanceof ctor;
 }
-
-/**
- * genericMemo — React.memo wrapper that preserves generic component types.
- * By default, React.memo loses generic type parameters. This re-types it
- * so that memoized generic components retain their generics.
- *
- * Usage:
- *   const MyList = <T,>({ items }: { items: T[] }) => <>{items.length}</>;
- *   const MemoizedList = genericMemo(MyList);
- *   <MemoizedList items={[1, 2, 3]} />  // T is inferred as number
- */
-export const genericMemo: <T extends ComponentType<ComponentProps<T>>>(
-  component: T,
-  propsAreEqual?: (prevProps: Readonly<ComponentProps<T>>, nextProps: Readonly<ComponentProps<T>>) => boolean,
-) => T = memo;
 
 /**
  * nameOf — Get the constructor name of an object at runtime.

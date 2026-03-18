@@ -1,5 +1,5 @@
 import {describe, expect, test} from '@jest/globals';
-import {parseStringDate, isDate, isValidDate, format, DateFormat, isSameDate, isEqualDates, subYears, subMonths} from '@/utils/date';
+import {parseStringDate, isDate, isValidDate, format, DateFormat, isSameDate, isEqualDates, addYears, addMonths} from '@/utils/date';
 
 describe('parseStringDate', () => {
   test.each([
@@ -88,23 +88,23 @@ describe('format', () => {
   });
 });
 
-describe('subYears', () => {
+describe('addYears', () => {
   test.each([
     [new Date('2018-01-01T00:00:00.000'), 42, new Date('2060-01-01T00:00:00.000')],
     [new Date('2018-01-01T22:17:37.129'), 42, new Date('2060-01-01T22:17:37.129')],
     [new Date('2018-01-01T00:00:00.000'), -8, new Date('2010-01-01T00:00:00.000')],
     [new Date('2000-02-29T00:00:00.000'), 2, new Date('2002-02-28T00:00:00.000')],
   ])('args: %p, %p; returns %p', (arg1, arg2, expectedResult) => {
-    expect(subYears(arg1, arg2)).toEqual(expectedResult);
+    expect(addYears(arg1, arg2)).toEqual(expectedResult);
   });
 });
 
-describe('subMonths', () => {
+describe('addMonths', () => {
   test.each([
     [new Date('2018-01-01T00:00:00.000'), 2, new Date('2018-03-01T00:00:00.000')],
     [new Date('2018-01-01T22:17:37.129'), -2, new Date('2017-11-01T22:17:37.129')],
   ])('args: %p, %p; returns %p', (arg1, arg2, expectedResult) => {
-    expect(subMonths(arg1, arg2)).toEqual(expectedResult);
+    expect(addMonths(arg1, arg2)).toEqual(expectedResult);
   });
 });
 

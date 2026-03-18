@@ -7,7 +7,7 @@ module.exports = merge(commonConfig, {
   devtool: 'eval-cheap-module-source-map',
   cache: {type: 'filesystem'},
   devServer: {
-    port: '8000',
+    port: 8000,
     static: {
       directory: path.join(__dirname, 'public'),
     },

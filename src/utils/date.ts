@@ -33,31 +33,25 @@ export enum DateFormat {
   Slash = 'moment("DD/MM/YYYY")',
 }
 
-const formatDate = (date: Date, format: DateFormat | string): string => {
+const DATE_FORMATTERS = new Map<string, (date: Date) => string>([
+  [DateFormat.API, (d): string => DATE_FORMAT_API.format(d)],
+  [DateFormat.Short, (d): string => DATE_FORMAT_SHORT.format(d)],
+  [DateFormat.Full, (d): string => DATE_FORMAT_FULL.format(d)],
+  [DateFormat.Table, (d): string => DATE_FORMAT_TABLE.format(d)],
+  [DateFormat.TableWithTime, (d): string => `${DATE_FORMAT_TABLE_SHORT.format(d)} ${TIME_FORMAT_SHORT.format(d)}`],
+  [DateFormat.Dot, (d): string => DATE_FORMAT_DOT.format(d)],
+  [DateFormat.Slash, (d): string => DATE_FORMAT_SLASH.format(d)],
+]);
+
+const formatDate = (date: Date, format: string): string => {
   if (!isValid(date)) return '';
 
-  switch (format) {
-    case DateFormat.API:
-      return DATE_FORMAT_API.format(date);
-    case DateFormat.Short:
-      return DATE_FORMAT_SHORT.format(date);
-    case DateFormat.Full:
-      return DATE_FORMAT_FULL.format(date);
-    case DateFormat.Table:
-      return DATE_FORMAT_TABLE.format(date);
-    case DateFormat.TableWithTime:
-      return `${DATE_FORMAT_TABLE_SHORT.format(date)} ${TIME_FORMAT_SHORT.format(date)}`;
-    case DateFormat.Dot:
-      return DATE_FORMAT_DOT.format(date);
-    case DateFormat.Slash:
-      return DATE_FORMAT_SLASH.format(date);
-    default:
-      return new Intl.DateTimeFormat(format).format(date);
-  }
+  const fn = DATE_FORMATTERS.get(format);
+  return fn != null ? fn(date) : new Intl.DateTimeFormat(format).format(date);
 };
 
 /**
-   * Validate and format a date into it's string representation
+   * Validate and format a date into its string representation
    *
    * @param date - The {Date} object, a date {string} or a timestamp {number} be formatted
    * @param fmt - {DateFormat} enum value or a {string} which represents selected Locale
@@ -165,7 +159,7 @@ export const getMonthAhead = (date: Date): Date => {
   return monthAhead;
 };
 
-export const subYears = (date: Date, years: number): Date => {
+export const addYears = (date: Date, years: number): Date => {
   // if (!isValidDate(date)) return null;
   const result = new Date(date);
   // result.setHours(0, 0, 0, 0);
@@ -179,7 +173,7 @@ export const subYears = (date: Date, years: number): Date => {
   return result;
 };
 
-export const subMonths = (date: Date, months: number): Date => {
+export const addMonths = (date: Date, months: number): Date => {
   // if (!isValidDate(date)) return null;
   const thisMonth = date.getMonth();
   const result = new Date(date);
@@ -196,8 +190,8 @@ export const subMonths = (date: Date, months: number): Date => {
   return result;
 }
 
-export const getYearAgo = (date: Date): Date => subYears(date, -1);
-export const getYearAhead = (date: Date): Date => subYears(date, 1);
+export const getYearAgo = (date: Date): Date => addYears(date, -1);
+export const getYearAhead = (date: Date): Date => addYears(date, 1);
 
 // returns 42 days (6 weeks) to be rendered in the calendar widget
 export const getCalendarDatesByDate = (date: Date): Date[] => {

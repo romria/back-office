@@ -30,14 +30,14 @@ src/
 │   ├── switch/
 │   └── virtual-table/ # Virtualized sortable/paginated table
 ├── config/           # API base URL, request defaults, feature flags
-├── constants/        # HTTP header names and content-type strings
+├── constants/        # HTTP header names, content-type strings, time constants
 ├── controllers/
 │   └── request/      # Low-level fetch wrapper (timeout, error typing)
 ├── hooks/
 │   ├── use-async-data.ts    # Generic async state with staleness guard
 │   └── use-auto-scroll-on-navigation.ts
 ├── layouts/
-│   └── main/         # App shell (header, nav, Outlet)
+│   └── main/         # App shell (header, footer, nav, Outlet)
 ├── lib/
 │   └── setup-tests.ts  # jest-dom + jsdom polyfills
 ├── routes/           # Page-level components
@@ -45,16 +45,30 @@ src/
 │   ├── index/        # NOT lazy — included in initial bundle
 │   ├── login/        # lazy-loaded
 │   └── route-error/  # NOT lazy — included in initial bundle
+├── reducers/         # Reusable useReducer hooks
+│   ├── form.ts       # useFormReducer — controlled form field state
+│   ├── list.ts       # useListReducer — paginated/sorted list state
+│   └── record.ts     # useRecordReducer — single record view/edit state
 ├── state/
+│   ├── index.tsx     # AppContextProvider (combineProviders) + re-exports
 │   ├── store.ts      # Zustand root store (auth + users + notifications)
 │   ├── theme.tsx     # ThemeContext (light/dark, persisted to localStorage)
 │   └── slices/       # auth · users · notifications
 ├── styles/           # Global resets, variables, base styles
 ├── types/            # Shared TypeScript types
 └── utils/
-    ├── api.ts          # attachQueryParams (URLSearchParams)
-    ├── request.ts      # requestWithNotify — fetch + auto error notification
-    └── string.ts       # getRandomId (crypto.randomUUID)
+    ├── api.ts               # attachQueryParams (URLSearchParams)
+    ├── array.ts             # deleteByIndex, updateArrayRecord, isArrayIncludes
+    ├── date.ts              # DateFormat enum, format, parseStringDate, DateRange, date math helpers
+    ├── map-api-params.ts    # mapGetUsers, parseIsActiveFilter — API query param builders
+    ├── number.ts            # getPagesLimit
+    ├── object.ts            # isEmpty, isEqual (deep equality)
+    ├── parse-data.ts        # parseUser / formatUser / parseAndFormatUser (and UserExtended variants)
+    ├── request.ts           # requestWithNotify — fetch + auto error notification
+    ├── string.ts            # getRandomId (crypto.randomUUID)
+    ├── table-columns.tsx    # Cell / TableColumns types + toVirtualColumns mapper
+    ├── typescript-patterns.ts  # Reference patterns: Exactify, Subset, extractValues, create, isInstanceOf
+    └── typescript.ts        # KeyOf, ValueOf, KeysOfType, objectKeys, genericMemo
 ```
 
 ## Setup
@@ -114,6 +128,8 @@ Most page routes are lazy-loaded (`React.lazy` + `import(/* webpackChunkName */)
 - Actions are stable references — select them separately without `useShallow`
 - Outside React: `useAppStore.getState()` / `useAppStore.setState(...)`
 
+**`src/state/index.tsx`** — canonical import point for state. Exports `useAppStore`, `ThemeProvider`, `useTheme`. Also exports `AppContextProvider` (pre-composed React context providers) and `combineProviders` (utility to compose multiple `FC<{children}>` providers into one).
+
 **React Context** (`src/state/theme.tsx`):
 - `ThemeProvider` / `useTheme` — light/dark preference, persisted to `localStorage`, respects `prefers-color-scheme`
 - Use Context (not Zustand) when: value changes rarely, no partial subscriptions needed, no async/persistence/middleware required
@@ -133,7 +149,7 @@ Two tiers — kept separate so the transport has no UI dependency:
 ### Async Data Hooks
 
 - **`useAsyncData`** (`src/hooks/use-async-data.ts`) — generic `{state, run}` hook. Manages `isLoading / error / data` via `useReducer`. **Staleness guard**: each `run()` call increments an internal counter (`latestCallId`); only the most recent invocation can commit state. Prevents out-of-order responses from overwriting newer data.
-- **`useTableData`** (`src/hooks/use-table-data.ts`) — builds on `useAsyncData`. Takes a `fetcher(params: TableParams)` and exposes `{data, total, isLoading, error, onParamsChange, refresh}`. Initial params: `{limit: 20, skip: 0}`.
+- **`useList`** (`src/components/records-list/list/index.ts`) — list/table data helper built on top of `useAsyncData`. Takes `{recordName, mapGetRecords, apiGetRecords, mapGetRecordsData, parseAndFormatRecord}` and exposes `{data, total, isLoading, onParamsChange, refresh, onOpenEditor, onOpenEditorNew}`. Default pagination is `{limit: 20, skip: 0}`.
 
 ### Notifications
 
