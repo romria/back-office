@@ -1,4 +1,4 @@
-import {type ReactElement, type KeyboardEvent, Fragment, memo, useCallback, useMemo} from 'react';
+import {type ReactElement, type KeyboardEvent, type MouseEvent, Fragment, memo, useCallback, useMemo} from 'react';
 import {clsx as cs} from 'clsx';
 import SVGPencilSquare from '@/assets/svg/pencil-square.svg';
 import SVGTrash from '@/assets/svg/trash.svg';
@@ -23,7 +23,10 @@ const ActionIcon = memo(({
   id,
   onClick,
 }: Props): ReactElement => {
-  const onIconClick = useCallback(() => { onClick(id); }, [id, onClick]);
+  const onIconClick = useCallback((e: MouseEvent): void => {
+    e.stopPropagation();
+    onClick(id);
+  }, [id, onClick]);
 
   const onKeyDown = useCallback((e: KeyboardEvent<SVGSVGElement>): void => {
     if (e.key === 'Enter' || e.key === ' ') {

@@ -1,4 +1,4 @@
-import {type ReactElement, type ReactNode, useCallback, useMemo} from 'react';
+import {type ReactElement, type ReactNode, type KeyboardEvent, useCallback, useMemo} from 'react';
 import {clsx as cs} from 'clsx';
 import {genericMemo} from '@/utils/typescript';
 
@@ -32,6 +32,13 @@ const Switch = <NameT extends string>({
     onToggle(!toggled, name);
   }, [disabled, isLoading, name, onToggle, toggled]);
 
+  const onKeyDown = useCallback((e: KeyboardEvent<HTMLDivElement>): void => {
+    if (e.key !== ' ' && e.key !== 'Enter') return;
+    e.preventDefault();
+    if (isLoading || disabled) return;
+    onToggle(!toggled, name);
+  }, [disabled, isLoading, name, onToggle, toggled]);
+
   const labelNode = useMemo((): ReactNode => {
     const val = labelToggled && toggled ? labelToggled : label;
     return val ? <div className={classes.label}>{val}</div> : null;
@@ -47,9 +54,11 @@ const Switch = <NameT extends string>({
         className,
       )}
       onClick={onClick}
+      onKeyDown={onKeyDown}
       role="switch"
       tabIndex={0}
       aria-checked={toggled}
+      aria-disabled={disabled ?? false}
     >
       <div className={classes.switch}>
         <div className={cs(classes.control, {[classes.checked]: toggled})} />

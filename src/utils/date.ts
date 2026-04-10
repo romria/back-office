@@ -67,18 +67,14 @@ export const format = (date: Date | string | number | undefined, fmt: DateFormat
 }
 
 export const parseStringDate = (d: string): Date | undefined => {
-  if (typeof d !== 'string') return undefined;
-  const parsed = Date.parse(d);
-  if (Number.isNaN(parsed)) return undefined;
-  const isTimePresent = d.includes('T');
-  const raw = isTimePresent ? `${d}Z` : d; // back-end fix required to include zero UTC offset symbol
+  if (typeof d !== 'string' || Number.isNaN(Date.parse(d))) return undefined;
 
-  const date = new Date(raw);
-
-  if (!isTimePresent) {
-    date.setHours(0, 0, 0, 0);
+  if (!d.includes('T')) {
+    return new Date(`${d}T00:00:00Z`);
   }
-  return date;
+
+  const hasTz = d.endsWith('Z') || /[+-]\d{2}:\d{2}$/.test(d);
+  return new Date(hasTz ? d : `${d}Z`);
 };
 
 export const isSameDate = (a: Date | undefined, b: Date | undefined): boolean => {
