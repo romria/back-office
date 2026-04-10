@@ -56,9 +56,10 @@ const Switch = <NameT extends string>({
       onClick={onClick}
       onKeyDown={onKeyDown}
       role="switch"
-      tabIndex={0}
+      tabIndex={disabled === true || isLoading === true ? -1 : 0}
       aria-checked={toggled}
       aria-disabled={disabled ?? false}
+      aria-busy={isLoading ?? false}
     >
       <div className={classes.switch}>
         <div className={cs(classes.control, {[classes.checked]: toggled})} />

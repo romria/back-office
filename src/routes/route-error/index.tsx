@@ -1,13 +1,14 @@
 import {type ReactElement} from 'react';
 import {useRouteError, isRouteErrorResponse} from 'react-router-dom';
 import Link from '@/components/link';
+import {safeStringify} from '@/utils/string';
 
 const RouteError = (): ReactElement => {
   const error = useRouteError();
   let errorMessage: string;
 
   if (isRouteErrorResponse(error)) {
-    errorMessage = `${error.status} - ${error.statusText}.${(error.data != null) ? ` "${JSON.stringify(error.data)}"` : ''}`;
+    errorMessage = `${error.status} - ${error.statusText}.${(error.data != null) ? ` "${safeStringify(error.data)}"` : ''}`;
   } else if (error instanceof Error) {
     errorMessage = error.message;
   } else if (typeof error === 'string') {

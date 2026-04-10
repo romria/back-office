@@ -1,4 +1,4 @@
-import {useCallback, useReducer, type ReactElement, type ReactNode} from 'react';
+import {useCallback, useReducer, type ReactElement, type ReactNode, type KeyboardEvent} from 'react';
 import {clsx as cs} from 'clsx';
 import {TableVirtuoso} from 'react-virtuoso';
 
@@ -67,6 +67,11 @@ const reducer = (state: TableState, action: TableAction): TableState => {
 
 const getInitialState = (): TableState => ({sortKey: undefined, sortDir: 'asc', page: 1, pageSize: 20});
 
+const getAriaSort = (isActive: boolean, dir: SortDir): 'ascending' | 'descending' | 'none' => {
+  if (!isActive) return 'none';
+  return dir === 'asc' ? 'ascending' : 'descending';
+};
+
 const VirtualTable = <T,>({columns, data, total, isPending = false, onParamsChange, onRowClick}: Props<T>): ReactElement => {
   const [state, dispatch] = useReducer(reducer, getInitialState());
   const {sortKey, sortDir, page, pageSize} = state;
@@ -116,14 +121,20 @@ const VirtualTable = <T,>({columns, data, total, isPending = false, onParamsChan
             {columns.map(({key, label, minWidth, isSortable, isCentered}) => {
               const isActive = sortKey === key;
               const nextDir: SortDir = isActive && sortDir === 'asc' ? 'desc' : 'asc';
-              const onClick = isSortable ? (): void => { onSortChange(key, nextDir); } : undefined;
+              const onSort = isSortable ? (): void => { onSortChange(key, nextDir); } : undefined;
+              const onKeyDown = isSortable ? (e: KeyboardEvent<HTMLTableCellElement>): void => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSortChange(key, nextDir); }
+              } : undefined;
 
               return (
                 <th
                   key={key}
                   className={cs(classes.th, {[classes.thSortable]: isSortable, [classes.thSorted]: isActive, [classes.centered]: isCentered})}
                   style={{minWidth}}
-                  onClick={onClick}
+                  tabIndex={isSortable ? 0 : undefined}
+                  aria-sort={isSortable ? getAriaSort(isActive, sortDir) : undefined}
+                  onClick={onSort}
+                  onKeyDown={onKeyDown}
                 >
                   <span className={classes.thInner}>
                     {label}
