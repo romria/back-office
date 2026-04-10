@@ -57,7 +57,6 @@ const RecordsList = <
     onOpenEditor,
     // onOpenEditorNew,
   } = useList<TRecord, TRecordFormatted, TGETParams, TGETResponseData>({
-    recordName,
     // initialFilter,
     mapGetRecords,
     apiGetRecords,

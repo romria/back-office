@@ -143,7 +143,7 @@ export const toVirtualColumns = <T extends BaseRecord>(
         <img
           style={{width: col.width, height: col.height, objectFit: 'cover', display: 'block'}}
           src={readString(row, col.key)}
-          alt={`${col.label} of record ${row.id}`}
+          alt=""
         />
       ),
     };

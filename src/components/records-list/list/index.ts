@@ -6,7 +6,6 @@ import type {RequestResult} from '@/controllers/request';
 import type {TableParams} from '@/components/virtual-table';
 // import {type DateRange} from '@/utils/date';
 import useAsyncData from '@/hooks/use-async-data';
-import {useAppStore} from '@/state';
 
 interface Props<
   TRecord,
@@ -15,7 +14,6 @@ interface Props<
   TGETParams extends Query,
   TGETResponseData = {list: TRecord[], total: number},
 > {
-  recordName: string
   // initialFilter: TFilters
   mapGetRecords: (params: {limit: number, skip: number, sortedBy: string, order: 'asc' | 'desc'}) => TGETParams
   apiGetRecords: (params: TGETParams) => Promise<RequestResult<TGETResponseData>>
@@ -44,7 +42,6 @@ const useList = <
   TGETParams extends Query,
   TGETResponseData = {list: TRecord[], total: number},
 >({
-    recordName,
     // initialFilter,
     mapGetRecords,
     apiGetRecords,
@@ -53,7 +50,6 @@ const useList = <
     // apiUpdateRecord,
     // apiDeleteRecord,
   }: Props<TRecord, TRecordFormatted, TGETParams, TGETResponseData>): Result<TRecordFormatted> => {
-  const onShowNotification = useAppStore((s) => s.onShowNotification);
   const navigate = useNavigate();
   const {pathname} = useLocation();
 
@@ -77,7 +73,6 @@ const useList = <
       const result = await apiGetRecords(query);
 
       if (!result.ok) {
-        onShowNotification('error', `Failed to fetch ${recordName} list`);
         return {data: [], total: 0};
       }
 
@@ -91,8 +86,6 @@ const useList = <
     apiGetRecords,
     mapGetRecordsData,
     parseAndFormatRecord,
-    onShowNotification,
-    recordName,
     run,
     // filters,
   ]);

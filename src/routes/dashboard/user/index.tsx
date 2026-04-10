@@ -19,13 +19,13 @@ const DashboardUser = (): ReactElement => {
   const error = fetchError && fetchError.id === id ? fetchError.message : null;
 
   useEffect(() => {
-    if (user !== null || id === undefined) return;
+    if (user !== null || error !== null || id === undefined) return;
     void (async (): Promise<void> => {
       const result = await getUser(id);
       if (result.ok) setFetched({id, user: result.data});
       else setFetchError({id, message: 'User not found.'});
     })();
-  }, [id, user]);
+  }, [id, user, error]);
 
   const onBack = useCallback((): void => {
     void navigate('/dashboard/users');

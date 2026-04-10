@@ -26,8 +26,9 @@ const Pagination = ({page, pageSize, total, totalPages, rangeStart, rangeEnd, on
     </span>
 
     <div className={classes.pageControls}>
-      <span className={classes.pageSizeLabel}>Rows:</span>
+      <label htmlFor="page-size-select" className={classes.pageSizeLabel}>Rows:</label>
       <select
+        id="page-size-select"
         className={classes.pageSizeSelect}
         value={pageSize}
         onChange={(e: ChangeEvent<HTMLSelectElement>): void => {

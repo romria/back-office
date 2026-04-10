@@ -1,4 +1,4 @@
-import {type ReactElement, Fragment, memo, useCallback, useMemo} from 'react';
+import {type ReactElement, type KeyboardEvent, Fragment, memo, useCallback, useMemo} from 'react';
 import {clsx as cs} from 'clsx';
 import SVGPencilSquare from '@/assets/svg/pencil-square.svg';
 import SVGTrash from '@/assets/svg/trash.svg';
@@ -12,6 +12,11 @@ interface Props {
   onClick: (id: string) => void
 }
 
+const ARIA_LABELS: Record<Props['type'], string> = {
+  edit: 'Edit',
+  delete: 'Delete',
+};
+
 const ActionIcon = memo(({
   className,
   type,
@@ -19,6 +24,13 @@ const ActionIcon = memo(({
   onClick,
 }: Props): ReactElement => {
   const onIconClick = useCallback(() => { onClick(id); }, [id, onClick]);
+
+  const onKeyDown = useCallback((e: KeyboardEvent<SVGSVGElement>): void => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onClick(id);
+    }
+  }, [id, onClick]);
 
   const Component = useMemo(() => {
     switch (type) {
@@ -30,12 +42,16 @@ const ActionIcon = memo(({
 
   return (
     <Component
+      role="button"
+      tabIndex={0}
+      aria-label={ARIA_LABELS[type]}
       className={cs(
         classes.root,
         classes[type],
         className,
       )}
       onClick={onIconClick}
+      onKeyDown={onKeyDown}
     />
   );
 });
