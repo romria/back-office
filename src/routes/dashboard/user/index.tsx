@@ -5,6 +5,7 @@ import type {User} from '@/types/user';
 import Button from '@/components/button';
 
 import classes from './user.module.scss';
+import { formatRequestError } from '@/utils/api';
 
 const DashboardUser = (): ReactElement => {
   const {id} = useParams<{id: string}>();
@@ -23,7 +24,7 @@ const DashboardUser = (): ReactElement => {
     void (async (): Promise<void> => {
       const result = await getUser(id);
       if (result.ok) setFetched({id, user: result.data});
-      else setFetchError({id, message: 'User not found.'});
+      else setFetchError({id, message: formatRequestError(result.error) || 'An unknown error occurred while fetching the user.'});
     })();
   }, [id, user, error]);
 

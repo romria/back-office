@@ -1,6 +1,6 @@
 import {type ReactElement, type FC} from 'react';
 import {clsx as cs} from 'clsx';
-import {useLocation} from 'react-router-dom';
+import {useLocation, matchPath} from 'react-router-dom';
 import {useShallow} from 'zustand/react/shallow';
 import Link from '@/components/link';
 import SVGHome from '@/assets/svg/home.svg';
@@ -40,7 +40,7 @@ const Navigation = (): ReactElement => {
       {NAVI_ELEMENTS.map(({type, route, Icon, label}) => {
         if (type === 'link' && Icon !== undefined && route !== undefined) {
           const isIndexRoute = route === '/dashboard';
-          const isActive = isIndexRoute ? pathname === route : pathname.includes(route);
+          const isActive = matchPath({path: route, end: isIndexRoute}, pathname);
 
           return (
             <Link

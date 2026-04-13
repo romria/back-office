@@ -117,6 +117,7 @@ export const toVirtualColumns = <T extends BaseRecord>(
           toggled={col.key != null ? readBoolean(row, col.key) : false}
           name={row.id}
           onToggle={col.onToggle}
+          aria-label={col.label}
         />
       ),
     };

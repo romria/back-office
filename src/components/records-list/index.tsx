@@ -67,7 +67,7 @@ const RecordsList = <
   });
 
   const columns = useMemo(
-    () => toVirtualColumns(tableColumns, {onEdit: onOpenEditor, onDelete: () => {}}),
+    () => toVirtualColumns(tableColumns, {onEdit: onOpenEditor, onDelete: undefined}),
     [tableColumns, onOpenEditor],
   );
 

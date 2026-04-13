@@ -1,4 +1,4 @@
-import { type ComponentProps, type ComponentType, memo } from 'react';
+import { type ComponentProps, type ComponentType, type MemoExoticComponent, memo } from 'react';
 
 // Alternative to "keyofStringsOnly" deprecated TS compiler option
 export type KeyOf<T extends object> = Extract<keyof T, string>;
@@ -33,4 +33,4 @@ export const objectKeys = Object.keys as <T extends object>(value: T) => Array<K
 export const genericMemo: <T extends ComponentType<ComponentProps<T>>>(
   component: T,
   propsAreEqual?: (prevProps: Readonly<ComponentProps<T>>, nextProps: Readonly<ComponentProps<T>>) => boolean,
-) => T = memo;
+) => MemoExoticComponent<T> = memo;
