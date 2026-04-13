@@ -1,0 +1,29 @@
+@use './variables' as *;
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  overflow:auto;
+}
+
+body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+  background-color: $color-body-bg;
+  color: $color-font-primary;
+  font-family: $font-inter;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.35;
+}

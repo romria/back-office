@@ -1,0 +1,95 @@
+@use '../../styles/variables' as *;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: opacity 0.15s ease;
+
+  &.pending {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.container {
+  min-height: 0;
+  flex: 1;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.th {
+  padding: 10px 16px;
+  background-color: #f9fafb;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: $color-font-secondary;
+  border-bottom: 1px solid $color-border;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.thSortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: #f0f1f3;
+  }
+}
+
+.thSorted {
+  color: $color-primary;
+}
+
+.thInner {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sortIcon {
+  font-size: 11px;
+  color: $color-font-light;
+  line-height: 1;
+
+  &Active {
+    color: $color-primary;
+  }
+}
+
+.centered {
+  text-align: center;
+}
+
+.td {
+  padding: 10px 16px;
+  font-size: 13px;
+  color: $color-font-primary;
+  border-bottom: 1px solid $color-border-elements;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: #fff;
+  transition: background-color 0.15s ease;
+}
+
+.row {
+  transition: background-color 0.15s ease;
+
+  &.clickable {
+    cursor: pointer;
+
+    &:hover .td {
+      background-color: #f7f6ff;
+    }
+  }
+}
+

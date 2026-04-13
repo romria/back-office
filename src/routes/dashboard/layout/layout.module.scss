@@ -1,0 +1,15 @@
+@use '../../../styles/variables' as *;
+
+.dashboard {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.section {
+  flex: 1 1 auto;
+  background-color: #FBFBFB;
+  border-radius: 16px;
+  padding: 24px 32px;
+  margin-right: 24px;
+}
